@@ -15,8 +15,8 @@ export default class World {
       if (_group.name === "base") {
         this.setGradient();
         this.setSmoke();
-        this.setParticles();
         this.setVignette();
+        this.setParticles();
       }
     });
   }

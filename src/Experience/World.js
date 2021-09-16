@@ -22,7 +22,11 @@ export default class World {
 
   resize() {}
 
-  update() {}
+  update() {
+    if (this.gradient) {
+      this.gradient.update();
+    }
+  }
 
   destroy() {}
 }

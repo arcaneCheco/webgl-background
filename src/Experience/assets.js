@@ -9,6 +9,7 @@ export default [
         source: "/assets/particleMask.png",
         type: "texture",
       },
+      { name: "smokeTexture", source: "/assets/smoke.png", type: "texture" },
     ],
   },
 ];

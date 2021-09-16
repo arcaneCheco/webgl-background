@@ -13,7 +13,7 @@ export default class World {
     this.resources.on("groupEnd", (_group) => {
       if (_group.name === "base") {
         this.setGradient();
-        // this.setSmoke();
+        this.setSmoke();
         this.setParticles();
       }
     });

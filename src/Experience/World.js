@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Experience from "./Experience.js";
 import Gradient from "./Gradient.js";
+import Particles from "./Particles.js";
 
 export default class World {
   constructor(_options) {
@@ -12,6 +13,7 @@ export default class World {
     this.resources.on("groupEnd", (_group) => {
       if (_group.name === "base") {
         this.setGradient();
+        this.setParticles();
       }
     });
   }
@@ -20,11 +22,18 @@ export default class World {
     this.gradient = new Gradient();
   }
 
+  setParticles() {
+    this.particles = new Particles();
+  }
+
   resize() {}
 
   update() {
     if (this.gradient) {
       this.gradient.update();
+    }
+    if (this.particles) {
+      this.particles.update();
     }
   }
 

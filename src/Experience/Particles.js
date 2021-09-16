@@ -81,9 +81,9 @@ export default class Particles {
       uniforms: {
         uTime: { value: 0 },
         uSize: { value: 30 },
-        uProgressSpeed: { value: 0.00005 },
-        uPerlinFrequency: { value: 0.14 },
-        uPerlinMultiplier: { value: 5 },
+        uProgressSpeed: { value: 0.000015 },
+        uPerlinFrequency: { value: 0.17 },
+        uPerlinMultiplier: { value: 1 },
         uMask: { value: this.resources.items.particleMaskTexture },
       },
       vertexShader,
@@ -106,7 +106,7 @@ export default class Particles {
         {
           label: "uProgressSpeed",
           min: 0,
-          max: 0.0003,
+          max: 0.00008,
           step: 0.000001,
         }
       );
@@ -116,7 +116,7 @@ export default class Particles {
         {
           label: "uPerlinFrequency",
           min: 0,
-          max: 2,
+          max: 0.5,
           step: 0.1,
         }
       );
@@ -126,7 +126,7 @@ export default class Particles {
         {
           label: "uPerlinMultiplier",
           min: 0,
-          max: 20,
+          max: 2,
           step: 0.1,
         }
       );

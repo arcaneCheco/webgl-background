@@ -8,6 +8,7 @@ export default class Smoke {
     this.scene = this.experience.scene;
     this.time = this.experience.time;
     this.debug = this.experience.debug;
+    this.world = this.experience.world;
 
     this.count = 10;
     this.group = new THREE.Group();
@@ -21,6 +22,7 @@ export default class Smoke {
     }
 
     this.setGeometry();
+    this.setColor();
     this.setMaterial();
     this.setItems();
   }
@@ -29,14 +31,27 @@ export default class Smoke {
     this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
   }
 
+  setColor() {
+    this.color = {};
+
+    this.color.value = "#130819";
+    this.color.instance = new THREE.Color(this.color.value);
+
+    if (this.debug) {
+    }
+  }
+
   setMaterial() {
     this.material = new THREE.MeshBasicMaterial({
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      // blending: THREE.AdditiveBlending,
       alphaMap: this.resources.items.smokeTexture,
-      opacity: 0.1 + Math.random() * 0.4,
+      // opacity: 0.1 + Math.random() * 0.4,
+      opacity: 1,
     });
+
+    this.material.color = this.color.instance;
   }
 
   setItems() {
@@ -64,11 +79,15 @@ export default class Smoke {
   resize() {}
 
   update() {
+    // position
     const elapsedTime = this.time.elapsed + 123456789.123;
-
     for (const _item of this.items) {
       _item.mesh.rotation.z = elapsedTime * _item.rotationSpeed;
       _item.mesh.position.y = Math.sin(elapsedTime * _item.floatingSpeed);
     }
+
+    // color
+    this.color.instance.copy(this.world.gradient.colors.start.instance);
+    this.color.instance.lerp(new THREE.Color("#ffffff"), 0.1);
   }
 }

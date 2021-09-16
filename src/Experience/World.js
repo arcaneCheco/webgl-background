@@ -1,6 +1,6 @@
-import * as THREE from "three";
 import Experience from "./Experience.js";
 import Gradient from "./Gradient.js";
+import Smoke from "./Smoke.js";
 import Particles from "./Particles.js";
 
 export default class World {
@@ -13,6 +13,7 @@ export default class World {
     this.resources.on("groupEnd", (_group) => {
       if (_group.name === "base") {
         this.setGradient();
+        // this.setSmoke();
         this.setParticles();
       }
     });
@@ -22,15 +23,26 @@ export default class World {
     this.gradient = new Gradient();
   }
 
+  setSmoke() {
+    this.smoke = new Smoke();
+  }
+
   setParticles() {
     this.particles = new Particles();
   }
 
-  resize() {}
+  resize() {
+    if (this.smoke) {
+      this.smoke.resize();
+    }
+  }
 
   update() {
     if (this.gradient) {
       this.gradient.update();
+    }
+    if (this.smoke) {
+      this.smoke.update();
     }
     if (this.particles) {
       this.particles.update();

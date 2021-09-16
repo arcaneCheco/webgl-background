@@ -17,6 +17,17 @@ export default class Particles {
       this.debugFolder = this.debug.addFolder({
         title: "particles",
       });
+
+      this.debugFolder
+        .addInput(this, "count", {
+          min: 100,
+          max: 50000,
+          step: 100,
+        })
+        .on("change", () => {
+          this.setGeometry();
+          this.points.geometry = this.geometry;
+        });
     }
 
     this.setGeometry();
@@ -25,6 +36,9 @@ export default class Particles {
   }
 
   setGeometry() {
+    if (this.geometry) {
+      this.geometry.dispose();
+    }
     this.geometry = new THREE.BufferGeometry();
 
     const positionArray = new Float32Array(this.count * 3);
@@ -65,8 +79,12 @@ export default class Particles {
   setMaterial() {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
-        uMask: { value: this.resources.items.particleMaskTexture },
         uTime: { value: 0 },
+        uSize: { value: 30 },
+        uProgressSpeed: { value: 0.00005 },
+        uPerlinFrequency: { value: 0.14 },
+        uPerlinMultiplier: { value: 5 },
+        uMask: { value: this.resources.items.particleMaskTexture },
       },
       vertexShader,
       fragmentShader,
@@ -74,6 +92,45 @@ export default class Particles {
       blending: THREE.AdditiveBlending,
       depthTest: false,
     });
+
+    if (this.debug) {
+      this.debugFolder.addInput(this.material.uniforms.uSize, "value", {
+        label: "uSize",
+        min: 0,
+        max: 200,
+        step: 0.1,
+      });
+      this.debugFolder.addInput(
+        this.material.uniforms.uProgressSpeed,
+        "value",
+        {
+          label: "uProgressSpeed",
+          min: 0,
+          max: 0.0003,
+          step: 0.000001,
+        }
+      );
+      this.debugFolder.addInput(
+        this.material.uniforms.uPerlinFrequency,
+        "value",
+        {
+          label: "uPerlinFrequency",
+          min: 0,
+          max: 2,
+          step: 0.1,
+        }
+      );
+      this.debugFolder.addInput(
+        this.material.uniforms.uPerlinMultiplier,
+        "value",
+        {
+          label: "uPerlinMultiplier",
+          min: 0,
+          max: 20,
+          step: 0.1,
+        }
+      );
+    }
   }
 
   setPoints() {
